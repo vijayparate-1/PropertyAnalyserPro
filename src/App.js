@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import RentalYieldCalculator from "./components/RentalYieldCalculator";
+import RentalYieldCalculator from "./RentalYieldCalculator";
 /* ═══════════════════════════════════════════════════════════════
    AUSTRALIAN PROPERTY INVESTMENT ANALYSER
    ATO FY2025-26 | All states stamp duty | IRR/DCF/NPV
