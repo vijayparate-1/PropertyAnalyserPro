@@ -5,6 +5,8 @@ import BorrowingMortgage from "./BorrowingMortgage";
 import CGTAndRenovation from "./CGTAndRenovation";
 import OffsetAndStressTest from "./OffsetAndStressTest";
 import RentVsBuyPortfolio from "./RentVsBuyPortfolio";
+import PortfolioView from "./PortfolioView";
+
 /* ═══════════════════════════════════════════════════════════════
    AUSTRALIAN PROPERTY INVESTMENT ANALYSER
    ATO FY2025-26 | All states stamp duty | IRR/DCF/NPV
@@ -1557,6 +1559,7 @@ const TABS = [
 { id: "cgt",        label: "11. CGT & Renovation",     icon: "🧾" },
 { id: "offset",     label: "12. Offset & Stress Test", icon: "📊" },
 { id: "planning",   label: "13. Rent vs Buy",          icon: "🏠" },
+   { id: "portfolio", label: "14. Portfolio", icon: "🏘️" },
 ];
 
 export default function App() {
@@ -1584,6 +1587,7 @@ export default function App() {
 case "cgt":       return <CGTAndRenovation />;
 case "offset":    return <OffsetAndStressTest />;
 case "planning":  return <RentVsBuyPortfolio />;   
+   case "portfolio": return <PortfolioView />;
       default:            return null;
     }
   };
