@@ -1,6 +1,10 @@
 import { useState, useMemo, useCallback } from "react";
 import RentalYieldCalculator from "./RentalYieldCalculator";
 import LVRAndStampDuty from "./LVRAndStampDuty";
+import BorrowingMortgage from "./BorrowingMortgage";
+import CGTAndRenovation from "./CGTAndRenovation";
+import OffsetAndStressTest from "./OffsetAndStressTest";
+import RentVsBuyPortfolio from "./RentVsBuyPortfolio";
 /* ═══════════════════════════════════════════════════════════════
    AUSTRALIAN PROPERTY INVESTMENT ANALYSER
    ATO FY2025-26 | All states stamp duty | IRR/DCF/NPV
@@ -1549,6 +1553,10 @@ const TABS = [
   { id: "compare",     label: "7. Compare",            icon: "⚖️" },
   { id: "rental",      label: "8. Rental Yield",       icon: "🏘️" },
    { id: "lvrstamp", label: "9. LVR & Stamp Duty", icon: "📉" },
+   { id: "borrowing",  label: "10. Borrowing & Mortgage", icon: "💰" },
+{ id: "cgt",        label: "11. CGT & Renovation",     icon: "🧾" },
+{ id: "offset",     label: "12. Offset & Stress Test", icon: "📊" },
+{ id: "planning",   label: "13. Rent vs Buy",          icon: "🏠" },
 ];
 
 export default function App() {
@@ -1572,6 +1580,10 @@ export default function App() {
       case "compare":     return <Tab7Compare inputs={inputs} p2Inputs={p2Inputs} />;
       case "rental": return <RentalYieldCalculator />;
          case "lvrstamp": return <LVRAndStampDuty />;
+      case "borrowing": return <BorrowingMortgage />;
+case "cgt":       return <CGTAndRenovation />;
+case "offset":    return <OffsetAndStressTest />;
+case "planning":  return <RentVsBuyPortfolio />;   
       default:            return null;
     }
   };
