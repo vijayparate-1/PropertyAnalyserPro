@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import RentalYieldCalculator from "./RentalYieldCalculator";
+import LVRAndStampDuty from "./LVRAndStampDuty";
 /* ═══════════════════════════════════════════════════════════════
    AUSTRALIAN PROPERTY INVESTMENT ANALYSER
    ATO FY2025-26 | All states stamp duty | IRR/DCF/NPV
@@ -1547,6 +1548,7 @@ const TABS = [
   { id: "sensitivity", label: "6. Sensitivity",        icon: "🔢" },
   { id: "compare",     label: "7. Compare",            icon: "⚖️" },
   { id: "rental",      label: "8. Rental Yield",       icon: "🏘️" },
+   { id: "lvrstamp", label: "9. LVR & Stamp Duty", icon: "📉" },
 ];
 
 export default function App() {
@@ -1569,6 +1571,7 @@ export default function App() {
       case "sensitivity": return <Tab6Sensitivity {...props} />;
       case "compare":     return <Tab7Compare inputs={inputs} p2Inputs={p2Inputs} />;
       case "rental": return <RentalYieldCalculator />;
+         case "lvrstamp": return <LVRAndStampDuty />;
       default:            return null;
     }
   };
