@@ -1635,9 +1635,56 @@ case "planning":  return <RentVsBuyPortfolio />;
     }
   };
 
+  if (!unlocked) return (
+    <div style={{ minHeight:"100vh", background:"#0f172a",
+      display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ background:"white", borderRadius:16, padding:"40px 48px",
+        textAlign:"center", boxShadow:"0 20px 60px rgba(0,0,0,0.3)",
+        minWidth:340 }}>
+        <div style={{ fontSize:48, marginBottom:8 }}>🏘️</div>
+        <div style={{ fontSize:22, fontWeight:900, color:"#0f172a",
+          marginBottom:4 }}>Property Analyser Pro</div>
+        <div style={{ fontSize:12, color:"#64748b", marginBottom:28 }}>
+          Australian Property Investment Tool
+        </div>
+        <input
+          type="password"
+          placeholder="Enter passcode"
+          value={passcode}
+          onChange={e=>{ setPasscode(e.target.value); setPasscodeError(false); }}
+          onKeyDown={e=>{ if(e.key==='Enter'){
+            if(passcode===APP_PASSCODE){ setUnlocked(true); }
+            else { setPasscodeError(true); }
+          }}}
+          style={{ width:"100%", padding:"12px 16px", borderRadius:8,
+            border:`2px solid ${passcodeError?"#ef4444":"#e2e8f0"}`,
+            fontSize:16, marginBottom:12, boxSizing:"border-box",
+            outline:"none", textAlign:"center", letterSpacing:"0.2em" }}
+        />
+        {passcodeError && (
+          <div style={{ color:"#ef4444", fontSize:12, marginBottom:12 }}>
+            Incorrect passcode — try again
+          </div>
+        )}
+        <button
+          onClick={()=>{
+            if(passcode===APP_PASSCODE){ setUnlocked(true); }
+            else { setPasscodeError(true); }
+          }}
+          style={{ width:"100%", padding:"12px", borderRadius:8,
+            background:"#0f172a", color:"white", border:"none",
+            fontSize:15, fontWeight:700, cursor:"pointer" }}>
+          Enter →
+        </button>
+        <div style={{ fontSize:10, color:"#94a3b8", marginTop:20 }}>
+          Developed by Vijay Parate using Claude AI
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
-
       {/* ── Top header bar ── */}
       <header style={{
         background: C.navy,
@@ -1673,7 +1720,11 @@ case "planning":  return <RentVsBuyPortfolio />;
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontSize:10, color: saving ? "#f59e0b" : "#94a3b8",
+            fontWeight:700 }}>
+            {saving ? "💾 Saving..." : lastSaved instanceof Date ? `✅ Saved ${lastSaved.toLocaleTimeString()}` : ""}
+          </span>
           <div style={{ fontSize: 11, color: C.muted, textAlign: "right" }}>
             <div style={{ color: C.text, fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>{inputs.nickname || "—"}</div>
             <div>{inputs.state} · {fmt.currency(inputs.purchasePrice)} · {fmt.pct(calcMarginalRate(inputs.personalIncome) * 100, 0)} tax</div>
