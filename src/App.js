@@ -1573,7 +1573,44 @@ export default function App() {
   const [p2Inputs, setP2Inputs] = useState(DEFAULT_P2);
   const [activeTab, setActiveTab] = useState("costs");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [unlocked, setUnlocked] = useState(false);
+  const [passcode, setPasscode] = useState('');
+  const [passcodeError, setPasscodeError] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState(null);
+  const [dbLoaded, setDbLoaded] = useState(false);
 
+   // ── Load from Supabase on unlock ──
+  useEffect(() => {
+    if (!unlocked || dbLoaded) return;
+    const load = async () => {
+      const { data } = await db
+        .from('property_data')
+        .select('data')
+        .eq('id', 'personal')
+        .single();
+      if (data?.data && Object.keys(data.data).length > 0) {
+        if (data.data.inputs) setInputs(prev => ({ ...prev, ...data.data.inputs }));
+        if (data.data.p2Inputs) setP2Inputs(prev => ({ ...prev, ...data.data.p2Inputs }));
+      }
+      setDbLoaded(true);
+    };
+    load();
+  }, [unlocked]);
+
+  // ── Auto-save to Supabase ──
+  useEffect(() => {
+    if (!unlocked || !dbLoaded) return;
+    const timer = setTimeout(async () => {
+      setSaving(true);
+      await db.from('property_data')
+        .update({ data: { inputs, p2Inputs }, updated_at: new Date().toISOString() })
+        .eq('id', 'personal');
+      setSaving(false);
+      setLastSaved(new Date());
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [inputs, p2Inputs, unlocked, dbLoaded]);
   const stampDuty = useMemo(() => calcStampDuty(inputs.purchasePrice, inputs.state, inputs.isFirstHomeBuyer), [inputs.purchasePrice, inputs.state, inputs.isFirstHomeBuyer]);
   const cashInvested = useMemo(() => inputs.purchasePrice * inputs.depositPct / 100 + stampDuty + inputs.legalFees + inputs.inspectionFee + inputs.loanEstFee, [inputs, stampDuty]);
 
