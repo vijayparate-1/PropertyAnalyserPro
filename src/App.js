@@ -1,4 +1,10 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://nigxjhhsyxcywtjwhbjp.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pZ3hqaGhzeXhjeXd0andoYmpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMDMxNDUsImV4cCI6MjA4ODY3OTE0NX0.FDoOPCm9L44pJy_EnVd_7MTdJTtJVyddQqdMpwuzmNA';
+const db = createClient(SUPABASE_URL, SUPABASE_ANON);
+const APP_PASSCODE = '2025Property#';
 import RentalYieldCalculator from "./RentalYieldCalculator";
 import LVRAndStampDuty from "./LVRAndStampDuty";
 import BorrowingMortgage from "./BorrowingMortgage";
